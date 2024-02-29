@@ -15,6 +15,11 @@ class TodoList extends Component
     public $name;
 
     public $search;
+
+    public $editingTodoId;
+
+    #[Rule('required|min:3|max:50')]
+    public $editingTodoName;
     public function create()
     {
         $validated = $this->validateOnly('name');
@@ -24,6 +29,8 @@ class TodoList extends Component
         $this->reset('name');
 
         session()->flash('success', 'Created.');
+
+        $this->resetPage();
     }
     public function toggle($id)
     {
@@ -34,6 +41,25 @@ class TodoList extends Component
     public function delete($id)
     {
         Todo::find($id)->delete();
+    }
+
+    public function edit($id)
+    {
+        $this->editingTodoId = $id;
+        $this->editingTodoName = Todo::findOrFail($id)->name;
+    }
+    public function cancelEdit()
+    {
+        $this->reset('editingTodoId', 'editingTodoName');
+    }
+    public function update()
+    {
+        $this->validateOnly('editingTodoName');
+        $todo = Todo::findOrFail($this->editingTodoId);
+        $todo->name = $this->editingTodoName;
+        $todo->update();
+
+        $this->cancelEdit();
     }
     public function render()
     {
