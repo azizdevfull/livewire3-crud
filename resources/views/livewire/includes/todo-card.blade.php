@@ -2,13 +2,20 @@
     class="todo mb-5 card px-5 py-6 bg-white col-span-1 border-t-2 border-blue-500 hover:shadow">
     <div class="flex justify-between space-x-2">
 
-        <!-- <input type="text" placeholder="Todo.."
-                    class="bg-gray-100  text-gray-900 text-sm rounded block w-full p-2.5"
-                    value="Todo Name">
+        <div class="flex items-center">
+            @if ($todo->completed)
+                <input wire:click='toggle({{ $todo->id }})' type="checkbox" class="mr-2" checked>
+            @else
+                <input wire:click='toggle({{ $todo->id }})' type="checkbox" class="mr-2">
+            @endif
+            <!-- <input type="text" placeholder="Todo.."
+                class="bg-gray-100  text-gray-900 text-sm rounded block w-full p-2.5"
+                value="Todo Name">
                 
-                    <span class="text-red-500 text-xs block">error</span> -->
+                <span class="text-red-500 text-xs block">error</span> -->
 
-        <h3 class="text-lg text-semibold text-gray-800">{{ $todo->name }}</h3>
+            <h3 class="text-lg text-semibold text-gray-800">{{ $todo->name }}</h3>
+        </div>
 
 
 

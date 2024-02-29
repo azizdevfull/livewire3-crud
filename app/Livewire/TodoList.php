@@ -25,6 +25,12 @@ class TodoList extends Component
 
         session()->flash('success', 'Created.');
     }
+    public function toggle($id)
+    {
+        $todo = Todo::findOrFail($id);
+        $todo->completed = !$todo->completed;
+        $todo->save();
+    }
     public function delete($id)
     {
         Todo::find($id)->delete();
