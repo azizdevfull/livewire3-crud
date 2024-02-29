@@ -40,7 +40,12 @@ class TodoList extends Component
     }
     public function delete($id)
     {
-        Todo::find($id)->delete();
+        try {
+            Todo::findOrFail($id)->delete();
+        } catch (\Exception $e) {
+            session()->flash('error', 'Failed to delete Todo!');
+            return;
+        }
     }
 
     public function edit($id)
