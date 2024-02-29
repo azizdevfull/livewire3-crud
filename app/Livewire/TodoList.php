@@ -25,6 +25,10 @@ class TodoList extends Component
 
         session()->flash('success', 'Created.');
     }
+    public function delete($id)
+    {
+        Todo::find($id)->delete();
+    }
     public function render()
     {
         $todos = Todo::latest()->where('name', 'like', "%{$this->search}%")->paginate(5);
